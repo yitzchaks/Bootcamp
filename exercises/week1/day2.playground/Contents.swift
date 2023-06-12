@@ -14,10 +14,6 @@ sliceSize(diameter: 16, slices: 12)
 sliceSize(diameter: nil, slices: 8)
 
 //Slice Sizing 2
-func biggestMessage(_ biggest: String) -> String{
-    return "Slice \(biggest) is bigger"
-}
-
 func biggestSlice(diameterA: String, slicesA: String, diameterB: String, slicesB: String) -> String{
     let sizeA: Double? = sliceSize(diameter: Double(diameterA), slices: Int(slicesA))
     let sizeB: Double? = sliceSize(diameter: Double(diameterB), slices: Int(slicesB))
