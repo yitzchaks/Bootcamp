@@ -21,19 +21,23 @@ func biggestMessage(_ biggest: String) -> String{
 func biggestSlice(diameterA: String, slicesA: String, diameterB: String, slicesB: String) -> String{
     let sizeA: Double? = sliceSize(diameter: Double(diameterA), slices: Int(slicesA))
     let sizeB: Double? = sliceSize(diameter: Double(diameterB), slices: Int(slicesB))
+    var bigger: String?
     switch (sizeA, sizeB) {
     case let (a?, b?):
         if a > b {
-            return biggestMessage("A")
+            bigger = "A"
+        } else {
+            bigger = "B"
         }
-        return biggestMessage("B")
-    case (_?, _):
-        return biggestMessage("A")
-    case (_, _?):
-        return biggestMessage("B")
+    case (.some, .none):
+        bigger = "A"
+    case (.none, .some):
+        bigger = "B"
     default:
         return "Neither slice is bigger"
     }
+    return "Slice \(bigger!) is bigger"
+    
 }
 
 biggestSlice(diameterA: "10", slicesA: "6", diameterB: "14", slicesB: "12")
