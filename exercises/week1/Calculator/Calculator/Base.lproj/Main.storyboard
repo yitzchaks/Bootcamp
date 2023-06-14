@@ -278,7 +278,7 @@
                     </view>
                     <connections>
                         <outlet property="input" destination="aNE-zb-yjY" id="EaY-46-uGg"/>
-                        <outlet property="retulte" destination="3mZ-nW-cmB" id="hPS-fo-aJm"/>
+                        <outlet property="result" destination="3mZ-nW-cmB" id="YVa-gP-E8X"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
