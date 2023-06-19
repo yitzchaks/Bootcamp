@@ -15,7 +15,7 @@ struct Todo {
         self.title = title
         self.color = color
     }
-
+    
     init(_ todo: String) {
         self.title = todo
         self.color = Todo.stringToColor(todo)
