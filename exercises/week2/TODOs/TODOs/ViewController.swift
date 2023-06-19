@@ -8,8 +8,24 @@
 import UIKit
 
 class ViewController: UIViewController {
-    // List of todo items
-    private var todos: [Todo] = []
+    // Private property 'todos' to manage Todo items via UserDefaults.
+    private var todos: [Todo] {
+        get {
+            // Attempt to retrieve and decode Todo items from UserDefaults.
+            if let data = UserDefaults.standard.data(forKey: "todos"),
+               let todos = try? JSONDecoder().decode([Todo].self, from: data) {
+                return todos
+            }
+            // Return empty array if no data or decoding fails.
+            return []
+        }
+        set {
+            // Encode new Todo items and save to UserDefaults.
+            if let data = try? JSONEncoder().encode(newValue) {
+                UserDefaults.standard.set(data, forKey: "todos")
+            }
+        }
+    }
     
     @IBOutlet weak var collectionView: UICollectionView!
     
