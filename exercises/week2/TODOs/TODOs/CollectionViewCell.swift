@@ -20,8 +20,8 @@ class CollectionViewCell: UICollectionViewCell {
      }
     
      // Setup function to configure the cell with a background color and title
-     func setup(backgroundColor: UIColor, cellTitle: String) {
-         self.backgroundColor = backgroundColor
-         titleLabel.text = "\(cellTitle)"
+    func setup(_ todo: Todo) {
+         self.backgroundColor = todo.color
+         titleLabel.text = "\(todo.title)"
      }
 }
