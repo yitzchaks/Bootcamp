@@ -7,7 +7,6 @@
 
 import UIKit
 
-//let products = ["Smartphone","Laptop","Headphones","Smartwatch","Camera","TV","Gaming Console","Bluetooth Speaker","Tablet","Fitness Tracker"]
 struct Product: Codable {
     let id: Int
     let title: String
@@ -48,7 +47,6 @@ class SecondViewController: UITableViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UITableViewCell.self,  forCellReuseIdentifier: "productCell")
-//        username.text = name
     }
 
 }
