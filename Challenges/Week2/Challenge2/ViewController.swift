@@ -7,23 +7,28 @@
 
 import UIKit
 
-func isValid(_ input: String?, type: String?) -> Bool {
+enum Fields: String {
+    case firstname
+    case lastname
+    case username
+    case password
+}
+
+func isValid(_ input: String?, type: Fields?) -> Bool {
     guard let input = input,
           let type = type else { return false }
     
     var regex: String
     switch type {
-    case "firstname":
+    case .firstname:
         regex = "^[a-zA-Z_]{1,30}$"
-    case "lastname":
+    case .lastname:
         regex = "^[a-zA-Z_]{1,30}$"
-    case "username":
+    case .username:
         // Regex for email format validation.
         regex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
-    case "password":
+    case .password:
         regex = "^.{1,30}$"
-    default:
-        return false
     }
     let test = NSPredicate(format: "SELF MATCHES %@", regex)
     return test.evaluate(with: input)
@@ -35,74 +40,66 @@ class ViewController: UIViewController {
     @IBOutlet weak var lastnameField: UITextField!
     @IBOutlet weak var usernameField: UITextField!
     @IBOutlet weak var passwordField: UITextField!
-    @IBOutlet weak var loginBtn: UIButton!
+    private var fields: [UITextField] = []
     
+    @IBOutlet weak var loginBtn: UIButton!
     @IBAction func submit(_ sender: UIButton) {
         sender.configuration?.showsActivityIndicator = true
-        let secondView = SecondViewController()
-        let session = URLSession.shared
-        let url = "https://balink.onlink.dev"
-        let registerUrl = "\(url)/register"
-        let productsUrl = "\(url)/products"
         
-        var headers = [
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-        ]
-        let body = [
-            "firstname": firstnameField.text,
-            "lastname": lastnameField.text,
-            "username": usernameField.text,
-            "password": passwordField.text,
-        ]
-        print(body)
+        var body: [String: Any] = [:]
+        for field in self.fields {
+            guard let placeholder = field.placeholder?.lowercased() else { return }
+            body[placeholder] = field.text
+        }
         
-        session.fetch(registerUrl, method: "POST", headers: headers, body: body as [String : Any]) {
-            (result: Result<String, Error>) in
+        FetchesManager.shared.registerUser(body: body as [String : Any]) {
+            [weak self] (result: Result<String, Error>) in
             switch result {
             case .success(let token):
                 print(token)
-                headers["Authorization"] = "Bearer \(token)"
-                session.fetch(productsUrl, method: "GET", headers: headers) {
+                FetchesManager.shared.fetchProducts(token: token) {
                     (result: Result<[Product], Error>) in
                     switch result {
                     case .success(let productsResult):
                         products = productsResult
-                        DispatchQueue.main.async {
-                            self.navigationController?.pushViewController(secondView, animated:true)
-                            self.loginBtn.configuration?.showsActivityIndicator = false
-                            self.resetFields()
-                        }
+                        self?.handleSuccess()
                     case .failure(let error):
-                        DispatchQueue.main.async {
-                            print(error)
-                            self.loginBtn.configuration?.showsActivityIndicator = false
-                        }
+                        self?.handleError(error)
                     }
                 }
             case .failure(let error):
-                DispatchQueue.main.async {
-                    print(error)
-                    self.loginBtn.configuration?.showsActivityIndicator = false
-                }
+                self?.handleError(error)
             }
         }
     }
     
     private func resetFields () {
-        loginBtn.isEnabled = false
-        guard let username = usernameField,
-              let password = passwordField else { return }
-        let fields = [username, password]
-        for field in fields {
+        for field in self.fields  {
             field.text = nil
             field.resignFirstResponder()
         }
     }
     
+    private func handleError(_ error: Error) {
+        DispatchQueue.main.async { [weak self] in
+            print(error)
+            self?.loginBtn.configuration?.showsActivityIndicator = false
+        }
+    }
+    
+    private func handleSuccess() {
+        DispatchQueue.main.async { [weak self] in
+            let secondView = SecondViewController()
+            self?.navigationController?.pushViewController(secondView, animated:true)
+            self?.loginBtn.configuration?.showsActivityIndicator = false
+            self?.resetFields()
+        }
+    }
+    
     @IBAction func fields(_ sender: UITextField) {
-        let textField = sender.placeholder?.lowercased()
-        if isValid(sender.text, type: textField) {
+        guard let placeholder = sender.placeholder else { return }
+        let field = Fields(rawValue: placeholder.lowercased())
+        if isValid(sender.text, type: field) {
             sender.layer.borderWidth = 0.0
         } else {
             sender.layer.borderWidth = 1.0
@@ -113,15 +110,15 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         self.title = "Login"
-        let fields = [
-            firstnameField,
-            lastnameField,
-            usernameField,
-            passwordField,
+        self.fields = [
+            self.firstnameField,
+            self.lastnameField,
+            self.usernameField,
+            self.passwordField,
         ]
-        for field in fields {
-            field?.layer.borderColor = UIColor.systemRed.cgColor
-            field?.layer.cornerRadius = 6.0
+        for field in self.fields {
+            field.layer.borderColor = UIColor.systemRed.cgColor
+            field.layer.cornerRadius = 6.0
         }
     }
 }

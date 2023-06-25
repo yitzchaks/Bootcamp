@@ -51,3 +51,27 @@ extension URLSession {
     }
 }
 
+
+class FetchesManager {
+    
+    static let shared = FetchesManager()
+    
+    let baseURL = "https://balink.onlink.dev"
+    let session = URLSession.shared
+    var headers = [
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+    ]
+    
+    func registerUser(body: [String: Any], completion: @escaping (Result<String, Error>) -> Void) {
+        let registerUrl = "\(baseURL)/register"
+        session.fetch(registerUrl, method: "POST", headers: headers, body: body as [String : Any], completion: completion)
+    }
+    
+    func fetchProducts(token: String, completion: @escaping (Result<[Product], Error>) -> Void) {
+        let productsUrl = "\(baseURL)/products"
+        headers["Authorization"] = "Bearer \(token)"
+        session.fetch(productsUrl, method: "GET", headers: headers, completion: completion)
+    }
+}
+
