@@ -7,19 +7,26 @@
 
 import UIKit
 
-func isValid(_ usernameStr:String?, _ passwordStr:String?) -> Bool {
-    guard let username = usernameStr,
-          let password = passwordStr
-    else { return false }
+func isValid(_ input: String?, type: String?) -> Bool {
+    guard let input = input,
+          let type = type else { return false }
     
-    // Regex restricts to alphanumeric and underscore and length should be between 4 to 16.
-    let usernameRegex = "^[a-zA-Z_]{4,16}$"
-    // Regex restricts to at least one uppercase, one lowercase, one number and one special character and length should be between 8 to 16.
-    let passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[$@$!%*?&])[A-Za-z\\d$@$!%*?&]{8,16}"
-    let usernameTest = NSPredicate(format:"SELF MATCHES %@", usernameRegex)
-    let passwordTest = NSPredicate(format: "SELF MATCHES %@", passwordRegex)
-    
-    return usernameTest.evaluate(with: username) && passwordTest.evaluate(with: password)
+    var regex: String
+    switch type {
+    case "firstname":
+        regex = "^[a-zA-Z_]{1,30}$"
+    case "lastname":
+        regex = "^[a-zA-Z_]{1,30}$"
+    case "username":
+        // Regex for email format validation.
+        regex = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
+    case "password":
+        regex = "^.{1,30}$"
+    default:
+        return false
+    }
+    let test = NSPredicate(format: "SELF MATCHES %@", regex)
+    return test.evaluate(with: input)
 }
 
 class ViewController: UIViewController {
@@ -50,7 +57,7 @@ class ViewController: UIViewController {
         ]
         print(body)
         
-        session.fetch(registerUrl, method: "POST", headers: headers, body: body) {
+        session.fetch(registerUrl, method: "POST", headers: headers, body: body as [String : Any]) {
             (result: Result<String, Error>) in
             switch result {
             case .success(let token):
@@ -94,17 +101,27 @@ class ViewController: UIViewController {
     }
     
     @IBAction func fields(_ sender: UITextField) {
-        //        if isValid(usernameField.text, passwordField.text) {
-        //            loginBtn.isEnabled = true
-        //        } else {
-        //            loginBtn.isEnabled = false
-        //        }
+        let textField = sender.placeholder?.lowercased()
+        if isValid(sender.text, type: textField) {
+            sender.layer.borderWidth = 0.0
+        } else {
+            sender.layer.borderWidth = 1.0
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.title = "Login"
-        //        loginBtn.isEnabled = false
+        let fields = [
+            firstnameField,
+            lastnameField,
+            usernameField,
+            passwordField,
+        ]
+        for field in fields {
+            field?.layer.borderColor = UIColor.systemRed.cgColor
+            field?.layer.cornerRadius = 6.0
+        }
     }
 }
