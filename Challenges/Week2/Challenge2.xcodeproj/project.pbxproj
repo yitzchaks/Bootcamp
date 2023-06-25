@@ -15,7 +15,7 @@
 		302038E62A4448C70024CFB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 302038E52A4448C70024CFB2 /* Assets.xcassets */; };
 		302038E92A4448C70024CFB2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 302038E72A4448C70024CFB2 /* LaunchScreen.storyboard */; };
 		302038F12A4449690024CFB2 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302038F02A4449690024CFB2 /* SecondViewController.swift */; };
-		302038F32A4450DE0024CFB2 /* Fetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302038F22A4450DE0024CFB2 /* Fetch.swift */; };
+		30994D7F2A4826A300C3EBB5 /* Fetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30994D7E2A4826A300C3EBB5 /* Fetch.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,7 +29,7 @@
 		302038E82A4448C70024CFB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		302038EA2A4448C70024CFB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		302038F02A4449690024CFB2 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
-		302038F22A4450DE0024CFB2 /* Fetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Fetch.swift; path = ../../../../../Documents/Fetch.swift; sourceTree = "<group>"; };
+		30994D7E2A4826A300C3EBB5 /* Fetch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fetch.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +71,7 @@
 				302038EA2A4448C70024CFB2 /* Info.plist */,
 				302038E22A4448C50024CFB2 /* Challenge2.xcdatamodeld */,
 				302038F02A4449690024CFB2 /* SecondViewController.swift */,
-				302038F22A4450DE0024CFB2 /* Fetch.swift */,
+				30994D7E2A4826A300C3EBB5 /* Fetch.swift */,
 			);
 			path = Challenge2;
 			sourceTree = "<group>";
@@ -147,7 +147,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				302038F32A4450DE0024CFB2 /* Fetch.swift in Sources */,
+				30994D7F2A4826A300C3EBB5 /* Fetch.swift in Sources */,
 				302038E42A4448C50024CFB2 /* Challenge2.xcdatamodeld in Sources */,
 				302038DE2A4448C50024CFB2 /* ViewController.swift in Sources */,
 				302038DA2A4448C50024CFB2 /* AppDelegate.swift in Sources */,
