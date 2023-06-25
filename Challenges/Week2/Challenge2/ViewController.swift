@@ -55,8 +55,8 @@ class ViewController: UIViewController {
         FetchesManager.shared.registerUser(body: body as [String : Any]) {
             [weak self] (result: Result<String, Error>) in
             switch result {
-            case .success(let token):
-                print(token)
+            case .success(let tokenResult):
+                token = tokenResult
                 FetchesManager.shared.fetchProducts(token: token) {
                     (result: Result<[Product], Error>) in
                     switch result {

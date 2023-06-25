@@ -22,6 +22,7 @@ struct Product: Codable {
     let images: [URL]
 }
 
+var token = ""
 var products: [Product] = []
 
 class SecondViewController: UITableViewController {
