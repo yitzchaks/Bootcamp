@@ -13,12 +13,17 @@ struct ContentView: View {
     @StateObject var postsVM = PostsVM()
     
     var body: some View {
-        VStack {
-            Text("Blog Posts")
-                .font(.title)
-            List(postsVM.posts) { post in
-                Text(post.title)
+        NavigationView {
+            List {
+                ForEach(postsVM.posts) { post in
+                    NavigationLink {
+                        PostView(post: post)
+                    } label: {
+                        Text(post.title)
+                    }
+                }
             }
+            .navigationTitle("Posts")
         }
         .padding()
         .onAppear {

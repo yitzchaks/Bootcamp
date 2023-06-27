@@ -10,6 +10,7 @@
 		308BD4ED2A4AFA890038C21D /* DataUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308BD4EC2A4AFA890038C21D /* DataUtils.swift */; };
 		308BD4EF2A4AFB950038C21D /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308BD4EE2A4AFB950038C21D /* Post.swift */; };
 		308BD4F12A4AFBE20038C21D /* PostsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308BD4F02A4AFBE20038C21D /* PostsVM.swift */; };
+		308BD4F32A4B21260038C21D /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308BD4F22A4B21260038C21D /* PostView.swift */; };
 		30994DAE2A4AD10B00C3EBB5 /* BlogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30994DAD2A4AD10B00C3EBB5 /* BlogApp.swift */; };
 		30994DB02A4AD10B00C3EBB5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30994DAF2A4AD10B00C3EBB5 /* ContentView.swift */; };
 		30994DB22A4AD10D00C3EBB5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 30994DB12A4AD10D00C3EBB5 /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 		308BD4EC2A4AFA890038C21D /* DataUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataUtils.swift; sourceTree = "<group>"; };
 		308BD4EE2A4AFB950038C21D /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		308BD4F02A4AFBE20038C21D /* PostsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsVM.swift; sourceTree = "<group>"; };
+		308BD4F22A4B21260038C21D /* PostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		30994DAA2A4AD10B00C3EBB5 /* Blog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		30994DAD2A4AD10B00C3EBB5 /* BlogApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogApp.swift; sourceTree = "<group>"; };
 		30994DAF2A4AD10B00C3EBB5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -50,6 +52,7 @@
 			isa = PBXGroup;
 			children = (
 				30994DAF2A4AD10B00C3EBB5 /* ContentView.swift */,
+				308BD4F22A4B21260038C21D /* PostView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -182,6 +185,7 @@
 				30994DB02A4AD10B00C3EBB5 /* ContentView.swift in Sources */,
 				308BD4ED2A4AFA890038C21D /* DataUtils.swift in Sources */,
 				30994DAE2A4AD10B00C3EBB5 /* BlogApp.swift in Sources */,
+				308BD4F32A4B21260038C21D /* PostView.swift in Sources */,
 				308BD4EF2A4AFB950038C21D /* Post.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
