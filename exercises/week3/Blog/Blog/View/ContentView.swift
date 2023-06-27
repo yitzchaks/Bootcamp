@@ -24,8 +24,8 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("Posts")
+            .listStyle(GroupedListStyle())
         }
-        .padding()
         .onAppear {
             Task{
                 await postsVM.getPosts()

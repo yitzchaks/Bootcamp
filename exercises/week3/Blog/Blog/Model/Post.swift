@@ -13,3 +13,11 @@ struct Post: Decodable, Identifiable {
      let title: String
      let body: String
 }
+
+struct Comment: Decodable, Identifiable {
+    let postId: Int
+    let id: Int
+    let name: String
+    let email: String
+    let body: String
+}
