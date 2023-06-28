@@ -16,10 +16,25 @@ struct PostView: View {
         VStack {
             Text(post.body)
                 .font(.title2)
-            Spacer()
+                .padding(.bottom, 30)
+            Spacer(minLength: 20)
             Text("Comments")
                 .font(.title3)
             Divider()
+            CommentList()
+        }
+        .navigationTitle(post.title)
+        .navigationBarTitleDisplayMode(.inline)
+        .padding()
+        .onAppear {
+            Task {
+                await commentVM.getComments(postId: String(post.id))
+            }
+        }
+    }
+    
+    private func CommentList() -> some View{
+        ScrollView{
             ForEach(commentVM.comments) { comment in
                 VStack(alignment: .leading) {
                     Text(comment.name)
@@ -28,14 +43,6 @@ struct PostView: View {
                         .font(.subheadline)
                     Divider()
                 }
-            }
-        }
-        .navigationTitle(post.title)
-        .navigationBarTitleDisplayMode(.inline)
-        .padding()
-        .onAppear {
-            Task {
-                await commentVM.getComments(postId: String(post.id))
             }
         }
     }
