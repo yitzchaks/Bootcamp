@@ -12,7 +12,9 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             Login()
-        }.navigationBarHidden(true)
+        }
+        .navigationBarHidden(true)
+        .navigationViewStyle(.stack)
     }
     
 }
