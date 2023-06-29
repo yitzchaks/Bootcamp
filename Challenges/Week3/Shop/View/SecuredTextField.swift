@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct SecuredTextField: View {
-    
     var title: String
     @Binding var password: String
     @State private var showPassword = false
@@ -54,5 +53,14 @@ struct SecuredTextField: View {
 extension String {
     func secured() -> String {
         return String(repeating: "•", count: self.count)
+    }
+}
+
+struct SecuredTextField_Previews: PreviewProvider {
+    static var previews: some View {
+        SecuredTextField(
+            title: "Secured",
+            password: .constant("")
+        )
     }
 }

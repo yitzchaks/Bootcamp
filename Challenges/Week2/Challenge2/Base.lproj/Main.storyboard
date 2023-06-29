@@ -80,11 +80,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="ww6-vx-aXB"/>
                     <connections>
-                        <outlet property="firstnameField" destination="fqK-Xp-igI" id="PYX-4i-9UB"/>
-                        <outlet property="lastnameField" destination="T72-y2-kVs" id="B8C-nr-avn"/>
+                        <outlet property="firstnameField" destination="fqK-Xp-igI" id="bHj-KT-TQ5"/>
+                        <outlet property="lastnameField" destination="T72-y2-kVs" id="N3u-TO-GoH"/>
                         <outlet property="loginBtn" destination="IZB-CE-GGs" id="u7A-H1-0aE"/>
-                        <outlet property="passwordField" destination="Tcl-5s-Mdq" id="04g-ed-UnS"/>
-                        <outlet property="usernameField" destination="Pfo-oG-WcD" id="e1s-Pa-fUL"/>
+                        <outlet property="passwordField" destination="Tcl-5s-Mdq" id="npt-Au-BmF"/>
+                        <outlet property="usernameField" destination="Pfo-oG-WcD" id="i2T-N0-hnD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
