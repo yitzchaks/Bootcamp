@@ -15,7 +15,7 @@ enum RequestType: String {
 struct UserResponse: Codable {
     var firstname: String?
     var lastname: String?
-    var token: String?
+    var token: String
 }
 
 struct UserError: Codable {

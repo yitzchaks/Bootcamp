@@ -7,12 +7,13 @@
 
 import SwiftUI
 
-struct Login: View {
+struct LoginView: View {
     @ObservedObject var userVM = UserViewModel()
     
     var body: some View {
         ZStack {
             Background()
+            
             VStack(spacing: 15) {
                 Text(userVM.reqType.rawValue)
                     .font(.largeTitle).bold()
@@ -30,13 +31,15 @@ struct Login: View {
                 
                 VStack{
                     NavigationLink(isActive: $userVM.success) {
-                        //Test
-                        Text(userVM.userData?.token ?? "Error")
+                        if let user = userVM.userData {
+                            ProductsView(user)
+                        } else {
+                            Text("Error")
+                        }
                     } label: {
                         EmptyView()
                     }
                 }.hidden()
-                
             }
         }
         .onAppear {
@@ -96,6 +99,6 @@ struct Login: View {
 
 struct Login_Previews: PreviewProvider {
     static var previews: some View {
-        Login()
+        LoginView()
     }
 }

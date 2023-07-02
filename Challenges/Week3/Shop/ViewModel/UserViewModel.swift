@@ -36,6 +36,14 @@ class UserViewModel: ObservableObject {
         
         do {
             self.userData = try await DataUtils.fetch("\(self.url)\(self.reqType)", method: .POST, headers: headers, body: body)
+            if let user = self.userData {
+                if user.firstname == nil {
+                    self.userData?.firstname = user.firstname
+                }
+                if user.lastname == nil {
+                    self.userData?.lastname = user.lastname
+                }
+            }
             self.success = true
         } catch {
             self.load = false
@@ -51,6 +59,6 @@ class UserViewModel: ObservableObject {
         self.lastname = ""
         self.load = false
         self.success = false
-        self.userData = UserResponse()
+        self.userData = nil
     }
 }

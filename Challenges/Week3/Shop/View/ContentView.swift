@@ -11,7 +11,7 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            Login()
+            LoginView()
         }
         .navigationBarHidden(true)
         .navigationViewStyle(.stack)
