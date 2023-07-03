@@ -32,7 +32,7 @@ struct LoginView: View {
                 VStack{
                     NavigationLink(isActive: $userVM.success) {
                         if let user = userVM.userData {
-                            ProductsView(user)
+                            CategoryView(user)
                         } else {
                             Text("Error")
                         }

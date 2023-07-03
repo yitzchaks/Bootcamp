@@ -53,8 +53,8 @@ class UserViewModel: ObservableObject {
     
     func reset() -> Void {
         self.reqType = .login
-        self.username = ""
-        self.password = ""
+        self.username = "y@gmail.com"
+        self.password = "1234"
         self.firstname = ""
         self.lastname = ""
         self.load = false

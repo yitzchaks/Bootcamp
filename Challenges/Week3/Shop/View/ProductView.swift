@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProductView: View {
-    @State var product: Product
+    @State private var product: Product
     init(_ product: Product) {
         self.product = product
     }
@@ -43,8 +43,8 @@ struct ProductView: View {
     }
 }
 
-//struct ProductView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ProductView()
-//    }
-//}
+struct ProductView_Previews: PreviewProvider {
+    static var previews: some View {
+        ProductView(product)
+    }
+}

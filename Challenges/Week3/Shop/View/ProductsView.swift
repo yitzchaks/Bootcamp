@@ -1,5 +1,5 @@
 //
-//  ProductsView.swift
+//  CategoryView.swift
 //  Shop
 //
 //  Created by Yitzchak Schechter on 02/07/2023.
@@ -8,69 +8,44 @@
 import SwiftUI
 
 struct ProductsView: View {
-    @ObservedObject var productsVM = ProductsViewModel()
+    @State private var category: String
+    @State private var products: [Product]
+    @State private var categoryTitleHidden: Bool = false
     
-    init(){}
-    init(_ user: UserResponse) {
-        productsVM = ProductsViewModel(user)
-        productsVM.fetchProducts()
+    init(_ category: String, products: [Product]) {
+        self.category = category
+        self.products = products
     }
     
     var body: some View {
         NavigationView {
-            ScrollView{
-                Progress()
+            ScrollView {
+                Spacer()
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
-                    ForEach(productsVM.categories.sorted(by: { $0.0 < $1.0 }), id: \.key) { key, value in
+                    ForEach(products) { product in
                         NavigationLink {
-                            CategoryView(key, products: value)
-                                .navigationTitle(key)
+                            ProductView(product)
+                                .onAppear(
+                                    perform: { categoryTitleHidden = true }
+                                )
+                                .onDisappear(
+                                    perform: { categoryTitleHidden = false }
+                                )
                         } label: {
-                            ZStack{
-                                RoundedRectangle(cornerRadius: 10)
-                                    .foregroundColor(.white)
-                                    .shadow(color: .gray, radius: 2, x: 0, y: 2)
-                                    .frame(height: 150)
-                                    .padding()
-                                
-                                Text(key)
-                                    .foregroundColor(.black)
-                                    .lineLimit(1)
-                                    .font(.title3)
-                                    .padding()
-                            }
+                            ProductCardView(product)
                         }
                     }
                 }
+                .padding(.horizontal)
             }
-            .navigationBarTitle("Categories", displayMode: .inline)
         }
-        .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(categoryTitleHidden)
         .navigationViewStyle(.stack)
-    }
-    
-    
-    private func Progress() -> some View{
-        VStack {
-            switch self.productsVM.status {
-            case .loading:
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle(tint: .blue))
-                    .scaleEffect(2)
-                    .padding()
-            case .success:
-                EmptyView()
-            case .error:
-                Text("Error!")
-                    .font(.largeTitle)
-                    .foregroundColor(.red)
-            }
-        }
     }
 }
 
 struct ProductsView_Previews: PreviewProvider {
     static var previews: some View {
-        ProductsView()
+        CategoryView()
     }
 }
