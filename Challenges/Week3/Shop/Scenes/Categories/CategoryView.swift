@@ -8,25 +8,20 @@
 import SwiftUI
 
 struct CategoryView: View {
-    @ObservedObject private var productsVM = ProductsViewModel()
-    
-    init(){}
-    init(_ user: UserResponse) {
-        productsVM = ProductsViewModel(user)
-        productsVM.fetchProducts()
-    }
+    @ObservedObject var categoryVM: CategoryViewModel
     
     var body: some View {
         NavigationView {
             ScrollView{
                 statusView()
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
-                    ForEach(productsVM.categories.sorted(by: { $0.0 < $1.0 }), id: \.key) { key, value in
+                    ForEach(categoryVM.categories, id: \.self) { category in
                         NavigationLink {
-                            ProductsView(key, products: value)
-                                .navigationTitle(key)
+                            ProductsView(category, products: [product])
+                                .navigationTitle(category)
                         } label: {
-                            categoryItem(title: key, imege: value[0].thumbnail)
+                            Text(category)
+//                            categoryItem(title: category, imege: value[0].thumbnail)
                         }
                     }
                 }
@@ -40,13 +35,13 @@ struct CategoryView: View {
     @ViewBuilder
     private func statusView() -> some View{
         VStack {
-            switch self.productsVM.status {
-            case .loading:
+            switch self.categoryVM.state {
+            case .load:
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle(tint: .blue))
                     .scaleEffect(2)
                     .padding()
-            case .success:
+            case .success, .idle:
                 EmptyView()
             case .error:
                 Text("Error!")
@@ -86,8 +81,8 @@ struct CategoryView: View {
     }
 }
 
-struct CategoryView_Previews: PreviewProvider {
-    static var previews: some View {
-        CategoryView(user)
-    }
-}
+//struct CategoryView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CategoryView(user)
+//    }
+//}

@@ -9,12 +9,11 @@ import SwiftUI
 
 struct LoadButton: View {
     var text: String
-    @Binding var isLoad: Bool
+    var isLoad: Bool
     var action: () -> Void
     
     var body: some View {
         Button {
-            isLoad = true
             action()
         } label: {
             if isLoad {
@@ -33,7 +32,7 @@ struct LoadButton_Previews: PreviewProvider {
     static var previews: some View {
         LoadButton(
             text: "Button",
-            isLoad: .constant(false),
+            isLoad: false,
             action: {print("Action")}
         )
     }

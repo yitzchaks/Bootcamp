@@ -8,31 +8,31 @@
 import SwiftUI
 
 struct LoginView: View {
-    @ObservedObject var userVM = UserViewModel()
+    @ObservedObject var loginVM = LoginViewModel()
     
     var body: some View {
         ZStack {
             background()
             
             VStack(spacing: 15) {
-                Text(userVM.reqType.rawValue)
+                Text(loginVM.reqType.rawValue)
                     .font(.largeTitle).bold()
                     .padding()
                 
                 fields()
                 
-                LoadButton(text: userVM.reqType.rawValue, isLoad: $userVM.load) {
+                LoadButton(text: loginVM.reqType.rawValue, isLoad: loginVM.state == .load) {
                     Task {
-                        await userVM.fetchUser()
+                        await loginVM.fetchUser()
                     }
                 }
                 
                 switchScreenButton()
                 
                 VStack{
-                    NavigationLink(isActive: $userVM.success) {
-                        if let user = userVM.userData {
-                            CategoryView(user)
+                    NavigationLink(isActive: .constant(loginVM.state == .success)) {
+                        if let user = loginVM.userData {
+                            CategoryView(categoryVM: CategoryViewModel())
                         } else {
                             Text("Error")
                         }
@@ -43,7 +43,7 @@ struct LoginView: View {
             }
         }
         .onAppear {
-            userVM.reset()
+            loginVM.reset()
         }
     }
     
@@ -62,20 +62,20 @@ struct LoginView: View {
     @ViewBuilder
     private func fields() -> some View {
         VStack(spacing: 15) {
-            if userVM.reqType == .register {
-                TextField("Firstname", text: $userVM.firstname)
+            if loginVM.reqType == .register {
+                TextField("Firstname", text: $loginVM.firstname)
                     .textFieldStyle(BlueTextFieldStyle())
                 
-                TextField("Lastname", text: $userVM.lastname)
+                TextField("Lastname", text: $loginVM.lastname)
                     .textFieldStyle(BlueTextFieldStyle())
             }
             
-            TextField("Username", text: $userVM.username)
+            TextField("Username", text: $loginVM.username)
                 .textFieldStyle(BlueTextFieldStyle())
             
             SecuredTextField(
                 title: "Password",
-                password: $userVM.password
+                password: $loginVM.password
             )
         }
     }
@@ -83,14 +83,14 @@ struct LoginView: View {
     @ViewBuilder
     private func switchScreenButton() -> some View {
         Button {
-            switch userVM.reqType {
+            switch loginVM.reqType {
             case .login:
-                userVM.reqType = .register
+                loginVM.reqType = .register
             case .register:
-                userVM.reqType = .login
+                loginVM.reqType = .login
             }
         } label: {
-            switch userVM.reqType {
+            switch loginVM.reqType {
             case .login:
                 Text("Register")
             case .register:

@@ -43,8 +43,8 @@ struct ProductsView: View {
     }
 }
 
-struct ProductsView_Previews: PreviewProvider {
-    static var previews: some View {
-        CategoryView()
-    }
-}
+//struct ProductsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        CategoryView()
+//    }
+//}

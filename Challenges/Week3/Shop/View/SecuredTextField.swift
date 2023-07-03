@@ -37,7 +37,7 @@ struct SecuredTextField: View {
                 .textFieldStyle(BlueTextFieldStyle())
             
             Button {
-                showPassword.toggle()
+                self.showPassword.toggle()
             } label: {
                 Image(systemName: showPassword ? "eye.slash" : "eye")
                     .foregroundColor(.blue)
