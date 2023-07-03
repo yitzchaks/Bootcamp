@@ -12,14 +12,14 @@ struct LoginView: View {
     
     var body: some View {
         ZStack {
-            Background()
+            background()
             
             VStack(spacing: 15) {
                 Text(userVM.reqType.rawValue)
                     .font(.largeTitle).bold()
                     .padding()
                 
-                Fields()
+                fields()
                 
                 LoadButton(text: userVM.reqType.rawValue, isLoad: $userVM.load) {
                     Task {
@@ -27,7 +27,7 @@ struct LoginView: View {
                     }
                 }
                 
-                SwitchScreenButton()
+                switchScreenButton()
                 
                 VStack{
                     NavigationLink(isActive: $userVM.success) {
@@ -47,7 +47,8 @@ struct LoginView: View {
         }
     }
     
-    private func Background() -> some View{
+    @ViewBuilder
+    private func background() -> some View {
         ZStack {
             Color.blue
                 .ignoresSafeArea(.all)
@@ -58,7 +59,8 @@ struct LoginView: View {
         }
     }
     
-    private func Fields() -> some View{
+    @ViewBuilder
+    private func fields() -> some View {
         VStack(spacing: 15) {
             if userVM.reqType == .register {
                 TextField("Firstname", text: $userVM.firstname)
@@ -78,7 +80,8 @@ struct LoginView: View {
         }
     }
     
-    private func SwitchScreenButton() -> some View{
+    @ViewBuilder
+    private func switchScreenButton() -> some View {
         Button {
             switch userVM.reqType {
             case .login:

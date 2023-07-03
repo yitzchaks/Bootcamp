@@ -19,14 +19,14 @@ struct CategoryView: View {
     var body: some View {
         NavigationView {
             ScrollView{
-                StatusView()
+                statusView()
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
                     ForEach(productsVM.categories.sorted(by: { $0.0 < $1.0 }), id: \.key) { key, value in
                         NavigationLink {
                             ProductsView(key, products: value)
                                 .navigationTitle(key)
                         } label: {
-                            CategoryItem(title: key, imege: value[0].thumbnail)
+                            categoryItem(title: key, imege: value[0].thumbnail)
                         }
                     }
                 }
@@ -37,8 +37,8 @@ struct CategoryView: View {
         .navigationViewStyle(.stack)
     }
     
-    
-    private func StatusView() -> some View{
+    @ViewBuilder
+    private func statusView() -> some View{
         VStack {
             switch self.productsVM.status {
             case .loading:
@@ -56,7 +56,8 @@ struct CategoryView: View {
         }
     }
     
-    private func CategoryItem(title: String, imege: String) -> some View{
+    @ViewBuilder
+    private func categoryItem(title: String, imege: String) -> some View{
         ZStack{
             AsyncImage(url: URL(string: imege)) { image in
                 image
@@ -79,7 +80,6 @@ struct CategoryView: View {
                 .position(x: 80, y: 135)
                 .cornerRadius(10)
                 .padding()
-        
         }
         .background(.gray.opacity(0.1))
         .cornerRadius(10)

@@ -117,15 +117,15 @@
 			isa = PBXGroup;
 			children = (
 				308BD5042A4C06330038C21D /* ContentView.swift */,
-				308BD5192A4C4A830038C21D /* SecuredTextField.swift */,
-				30EAEACF2A4D7C950022B986 /* LoadButton.swift */,
 				30EAEAD32A4D8DE50022B986 /* LoginView.swift */,
-				308BD51B2A4C76B20038C21D /* Styles.swift */,
 				3091F5932A516028003BE18A /* CategoryView.swift */,
 				3091F5972A518D6D003BE18A /* ProductsView.swift */,
 				3091F59B2A51A1DC003BE18A /* ProductView.swift */,
-				3091F5992A519E5F003BE18A /* ImagePlaceholder.swift */,
 				3091F59D2A51A2BF003BE18A /* ProductCardView.swift */,
+				308BD5192A4C4A830038C21D /* SecuredTextField.swift */,
+				30EAEACF2A4D7C950022B986 /* LoadButton.swift */,
+				3091F5992A519E5F003BE18A /* ImagePlaceholder.swift */,
+				308BD51B2A4C76B20038C21D /* Styles.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";

@@ -20,7 +20,6 @@ struct ProductsView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                Spacer()
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
                     ForEach(products) { product in
                         NavigationLink {
