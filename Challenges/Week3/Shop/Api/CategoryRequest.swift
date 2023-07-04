@@ -12,7 +12,13 @@ enum CategoryRequest: requestable {
     case category(for: String)
     
     var url: String {
-        return "https://balink.onlink.dev/categories?image=true"
+        let baseUrl = "https://balink.onlink.dev/categories"
+        switch self {
+        case .categories:
+            return "\(baseUrl)?image=true"
+        case .category(let forCategory):
+            return "\(baseUrl)/\(forCategory)"
+        }
     }
     
     var method: RequestMethod {
