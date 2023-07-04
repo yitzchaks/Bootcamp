@@ -14,14 +14,16 @@ struct CategoryView: View {
         NavigationView {
             ScrollView{
                 statusView()
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))]) {
-                    ForEach(categoryVM.categories, id: \.self) { category in
-                        NavigationLink {
-                            ProductsView(category, products: [product])
-                                .navigationTitle(category)
-                        } label: {
-                            Text(category)
-//                            categoryItem(title: category, imege: value[0].thumbnail)
+                //2 columns in iphone and 4 columns in ipad
+                LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: UIDevice.current.userInterfaceIdiom == .pad ? 4 : 2), spacing: 10) {
+                    if let categories = categoryVM.categories {
+                        ForEach(categories, id: \.title) { category in
+                            NavigationLink {
+                                ProductsView(category.title, products: [product])
+                                    .navigationTitle(category.title)
+                            } label: {
+                                categoryItem(title: category.title, imege: category.image)
+                            }
                         }
                     }
                 }
@@ -63,26 +65,22 @@ struct CategoryView: View {
             }
             .frame(width: 150, height: 150)
             .cornerRadius(10)
-            .padding()
+            .padding(.vertical)
             
             Text(title)
                 .foregroundColor(.white)
                 .lineLimit(1)
-                .font(.title3)
+                .font(.body)
                 .bold()
-                .frame(maxWidth: .infinity, maxHeight: 35)
-                .background(.blue)
-                .position(x: 80, y: 135)
-                .cornerRadius(10)
-                .padding()
+                .frame(maxWidth: 150, maxHeight: 35)
+                .roundedCorner(.blue.opacity(0.75), radius: 10, corners: [.bottomLeft, .bottomRight])
+                .padding(.top, 115)
         }
-        .background(.gray.opacity(0.1))
-        .cornerRadius(10)
     }
 }
 
-//struct CategoryView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CategoryView(user)
-//    }
-//}
+struct CategoryView_Previews: PreviewProvider {
+    static var previews: some View {
+        CategoryView(categoryVM: CategoryViewModel())
+    }
+}

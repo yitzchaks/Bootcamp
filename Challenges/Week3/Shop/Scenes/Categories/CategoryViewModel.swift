@@ -9,16 +9,16 @@ import Foundation
 
 class CategoryViewModel: ObservableObject {
     @Published var state: CategoryState = .idle
-    @Published var categories: [String] = []
+    @Published var categories: [Category]?
     
-    init() {
+    init(){
         Task{
             await self.fetchProducts()
         }
     }
     
-//    @MainActor
-    func fetchProducts() async {
+    @MainActor
+    private func fetchProducts() async {
         self.state = .load
         do {
             let request = CategoryRequest.categories

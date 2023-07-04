@@ -10,3 +10,9 @@ import Foundation
 enum CategoryState {
     case idle, load, success, error
 }
+
+struct Category: Decodable {
+    var title: String
+    var image: String
+}
+

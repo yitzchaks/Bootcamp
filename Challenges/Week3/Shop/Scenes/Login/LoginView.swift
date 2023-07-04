@@ -31,7 +31,7 @@ struct LoginView: View {
                 
                 VStack{
                     NavigationLink(isActive: .constant(loginVM.state == .success)) {
-                        if let user = loginVM.userData {
+                        if loginVM.userData != nil {
                             CategoryView(categoryVM: CategoryViewModel())
                         } else {
                             Text("Error")
