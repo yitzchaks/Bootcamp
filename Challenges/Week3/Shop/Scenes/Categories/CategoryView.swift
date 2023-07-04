@@ -19,10 +19,11 @@ struct CategoryView: View {
                     if let categories = categoryVM.categories {
                         ForEach(categories, id: \.title) { category in
                             NavigationLink {
-                                ProductsView(category.title, products: [product])
-                                    .navigationTitle(category.title)
+                                ProductsView(productsVM: ProductsViewModel(category.title))
                             } label: {
                                 categoryItem(title: category.title, imege: category.image)
+                                    .shadow(color: .black.opacity(0.25), radius: 10, x: 0, y: 0)
+                                
                             }
                         }
                     }
@@ -54,7 +55,7 @@ struct CategoryView: View {
     }
     
     @ViewBuilder
-    private func categoryItem(title: String, imege: String) -> some View{
+    private func categoryItem(title: String, imege: String) -> some View {
         ZStack{
             AsyncImage(url: URL(string: imege)) { image in
                 image
@@ -67,7 +68,7 @@ struct CategoryView: View {
             .cornerRadius(10)
             .padding(.vertical)
             
-            Text(title)
+            Text(title.capitalized)
                 .foregroundColor(.white)
                 .lineLimit(1)
                 .font(.body)

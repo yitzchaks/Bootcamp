@@ -31,7 +31,7 @@ struct ProductView: View {
                         } placeholder: {
                             ImagePlaceholder()
                         }
-//                        .frame(width: 80, height: 80)
+                        .frame(width: 80, height: 80)
                         .cornerRadius(10)
                         .padding(5)
                     }

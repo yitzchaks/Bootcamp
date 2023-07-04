@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum CartRequest: requestable {
+enum CartRequest: Requestable {
     case get
     case add(_ ids: [Int])
     case remove(_ ids: [Int])

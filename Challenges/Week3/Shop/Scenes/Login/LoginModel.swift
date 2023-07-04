@@ -8,8 +8,7 @@
 import Foundation
 
 enum RequestType: String {
-    case register = "Register"
-    case login = "Login"
+    case register, login
 }
 
 enum LoginState {

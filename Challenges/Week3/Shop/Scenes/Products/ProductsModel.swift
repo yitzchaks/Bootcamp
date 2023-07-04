@@ -2,10 +2,14 @@
 //  ProductsModel.swift
 //  Shop
 //
-//  Created by Yitzchak Schechter on 02/07/2023.
+//  Created by Yitzchak Schechter on 04/07/2023.
 //
 
 import Foundation
+
+enum ProductsState {
+    case idle, load, success, error
+}
 
 struct Product: Codable, Identifiable {
     let id: Int

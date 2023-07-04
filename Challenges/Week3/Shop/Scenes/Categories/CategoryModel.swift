@@ -12,7 +12,7 @@ enum CategoryState {
 }
 
 struct Category: Decodable {
-    var title: String
-    var image: String
+    let title: String
+    let image: String
 }
 

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum CategoryRequest: requestable {
+enum CategoryRequest: Requestable {
     case categories
     case category(for: String)
     

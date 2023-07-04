@@ -22,18 +22,22 @@ struct ProductCardView: View {
                 } placeholder: {
                     ImagePlaceholder()
                 }
-                .frame(width: 150, height: 150)
+                .frame(width: 120, height: 120)
                 .cornerRadius(10)
+                .padding(.horizontal, 15)
             
-            Text(product.title)
-                .foregroundColor(.black)
-                .lineLimit(1)
-                .font(.title3)
-            
-            Text("$\(product.price)")
-                .font(.body)
-                .foregroundColor(.gray)
-                .padding(.bottom)
+            VStack {
+                Text(product.title)
+                    .foregroundColor(.black)
+                    .lineLimit(1)
+                    .font(.title3)
+                
+                Text("$\(product.price)")
+                    .font(.body)
+                    .foregroundColor(.gray)
+//                    .padding(.bottom)
+            }
+            .frame(height: 30)
         }
     }
 }

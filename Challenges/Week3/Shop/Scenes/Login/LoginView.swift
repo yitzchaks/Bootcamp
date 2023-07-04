@@ -15,7 +15,7 @@ struct LoginView: View {
             background()
             
             VStack(spacing: 15) {
-                Text(loginVM.reqType.rawValue)
+                Text(loginVM.reqType.rawValue.capitalized)
                     .font(.largeTitle).bold()
                     .padding()
                 
@@ -45,6 +45,7 @@ struct LoginView: View {
         .onAppear {
             loginVM.reset()
         }
+        .transition(.slide)
     }
     
     @ViewBuilder
@@ -83,19 +84,9 @@ struct LoginView: View {
     @ViewBuilder
     private func switchScreenButton() -> some View {
         Button {
-            switch loginVM.reqType {
-            case .login:
-                loginVM.reqType = .register
-            case .register:
-                loginVM.reqType = .login
-            }
+            loginVM.reqType = loginVM.reqType == .login ? .register : .login
         } label: {
-            switch loginVM.reqType {
-            case .login:
-                Text("Register")
-            case .register:
-                Text("Login")
-            }
+            loginVM.reqType == .login ? Text("Register") : Text("Login")
         }
     }
 }

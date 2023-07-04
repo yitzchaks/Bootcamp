@@ -7,14 +7,14 @@
 
 import Foundation
 
-protocol requestable {
+protocol Requestable {
     var url: String { get }
     var method: RequestMethod { get }
     var headers: [String: String] { get }
     var body: Data? { get }
 }
 
-extension requestable {
+extension Requestable {
     var headers: [String: String] {
         var headers = ["Content-Type": "application/json", "Accept": "*/*"]
         if let token = UserDefaults.standard.string(forKey: "token") {
@@ -34,7 +34,7 @@ enum RequestMethod: String {
 }
 
 class RequestManager {
-    static func fetch<T: Decodable>(_ request: requestable) async throws -> T {
+    static func fetch<T: Decodable>(_ request: Requestable) async throws -> T {
         guard let url = URL(string: request.url) else { throw URLError(.badURL) }
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = request.method.value

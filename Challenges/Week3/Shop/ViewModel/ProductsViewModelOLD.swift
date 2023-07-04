@@ -11,7 +11,7 @@ enum Status {
     case loading, success, error
 }
 
-class ProductsViewModel: ObservableObject {
+class ProductsViewModelOLD: ObservableObject {
     private let url = "https://balink.onlink.dev/products"
     
     @Published var status: Status = .error

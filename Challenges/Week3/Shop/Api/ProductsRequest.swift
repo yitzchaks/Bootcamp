@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ProductsRequest: requestable {
+enum ProductsRequest: Requestable {
     case products
     case product(id: Int)
     case productsByIds(ids: [Int])
