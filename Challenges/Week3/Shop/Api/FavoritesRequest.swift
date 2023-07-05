@@ -9,11 +9,19 @@ import Foundation
 
 enum FavoritesRequest: Requestable {
     case get
-    case add(_ ids: [Int])
-    case remove(_ ids: [Int])
+    case add(_ id: Int)
+    case remove(_ id: Int)
     
     var url: String {
-        return "https://balink.onlink.dev/favorites"
+        let baseUrl = "https://balink.onlink.dev/favorites"
+        switch self {
+        case .get:
+            return baseUrl
+        case .add(let id):
+            return "\(baseUrl)/\(id)"
+        case .remove(let id):
+            return "\(baseUrl)/\(id)"
+        }
     }
     
     var method: RequestMethod {
@@ -24,16 +32,6 @@ enum FavoritesRequest: Requestable {
             return .post
         case .remove:
             return .delete
-        }
-    }
-    
-    var body: Data? {
-        switch self {
-        case .add(let ids), .remove(let ids):
-            var body = [ "products": ids ]
-            return try? JSONSerialization.data(withJSONObject: body)
-        default:
-            return nil
         }
     }
 }

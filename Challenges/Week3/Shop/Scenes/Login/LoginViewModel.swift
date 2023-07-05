@@ -14,7 +14,7 @@ class LoginViewModel: ObservableObject {
     @Published var password = ""
     @Published var firstname = ""
     @Published var lastname = ""
-    @Published var state: LoginState = .idle
+    @Published var state: StateModel = .idle
     @Published var userData: UserResponse?
     
     @MainActor

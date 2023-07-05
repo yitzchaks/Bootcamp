@@ -11,10 +11,6 @@ enum RequestType: String {
     case register, login
 }
 
-enum LoginState {
-    case idle, load, success, error
-}
-
 struct UserResponse: Codable {
     var firstname: String?
     var lastname: String?

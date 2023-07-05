@@ -12,7 +12,7 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            NavigationLink(tag: LoginState.success, selection: .constant(loginViewModel.state)){
+            NavigationLink(tag: StateModel.success, selection: .constant(loginViewModel.state)){
                 CategoryView(categoryVM: CategoryViewModel())
             } label: {
                 LoginView(loginVM: loginViewModel)
