@@ -42,8 +42,18 @@ class RequestManager {
         request.headers.forEach {key, value in
             urlRequest.setValue(value, forHTTPHeaderField: key)
         }
-        let (data, _) = try await URLSession.shared.data(for: urlRequest)
-        let decodedResponse = try JSONDecoder().decode(T.self, from: data)
-        return decodedResponse
+        let (data, res) = try await URLSession.shared.data(for: urlRequest)
+        if let res = res as? HTTPURLResponse, !(200...299).contains(res.statusCode) {
+            print(res.statusCode)
+            let error = try JSONDecoder().decode(UserError.self, from: data)
+            throw URLError(.badServerResponse, userInfo: [NSLocalizedDescriptionKey: error.message])
+        }
+        do {
+            let decodedResponse = try JSONDecoder().decode(T.self, from: data)
+            return decodedResponse
+        } catch {
+            print(error.localizedDescription)
+            throw error
+        }
     }
 }

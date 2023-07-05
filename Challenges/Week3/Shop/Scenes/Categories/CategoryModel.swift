@@ -7,10 +7,6 @@
 
 import Foundation
 
-enum CategoryState {
-    case idle, load, success, error
-}
-
 struct Category: Decodable {
     let title: String
     let image: String

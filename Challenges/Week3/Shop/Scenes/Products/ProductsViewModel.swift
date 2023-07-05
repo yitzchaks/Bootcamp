@@ -8,27 +8,26 @@
 import Foundation
 
 class ProductsViewModel: ObservableObject {
-    @Published var state: ProductsState = .idle
-    @Published var category = ""
+    @Published var category: String
+    @Published var state: StateModel = .idle
     @Published var products: [Product]?
     
-    init(_ category: String){
-        Task{
-            self.category = category
-            await self.fetchProducts()
-        }
+    init(category: String){
+        self.category = category
     }
     
     @MainActor
-    private func fetchProducts() async {
-        self.state = .load
+    func fetchProducts() async {
+        if self.products != nil {
+            return
+        }
         do {
+            self.state = .load
             let request = CategoryRequest.category(for: self.category)
             self.products = try await RequestManager.fetch(request)
             self.state = .success
         } catch {
             self.state = .error
-            print(error.localizedDescription)
         }
     }
 }

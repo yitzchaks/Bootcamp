@@ -17,7 +17,7 @@ enum CategoryRequest: Requestable {
         case .categories:
             return "\(baseUrl)?image=true"
         case .category(let forCategory):
-            return "\(baseUrl)/\(forCategory)"
+            return "\(baseUrl)/\(forCategory)?favorites=true"
         }
     }
     

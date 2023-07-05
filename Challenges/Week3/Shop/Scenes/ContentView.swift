@@ -8,15 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject private var loginViewModel = LoginViewModel()
     
     var body: some View {
         NavigationView {
-            LoginView()
+            NavigationLink(tag: LoginState.success, selection: .constant(loginViewModel.state)){
+                CategoryView(categoryVM: CategoryViewModel())
+            } label: {
+                LoginView(loginVM: loginViewModel)
+            }
         }
-        .navigationBarHidden(true)
         .navigationViewStyle(.stack)
     }
-    
 }
 
 struct ContentView_Previews: PreviewProvider {

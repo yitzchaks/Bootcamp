@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct LoginView: View {
-    @ObservedObject var loginVM = LoginViewModel()
+    @ObservedObject var loginVM: LoginViewModel
     
     var body: some View {
         ZStack {
             background()
             
+            //Title
             VStack(spacing: 15) {
                 Text(loginVM.reqType.rawValue.capitalized)
                     .font(.largeTitle).bold()
@@ -21,31 +22,21 @@ struct LoginView: View {
                 
                 fields()
                 
+                //Submit
                 LoadButton(text: loginVM.reqType.rawValue, isLoad: loginVM.state == .load) {
                     Task {
                         await loginVM.fetchUser()
                     }
                 }
                 
+                //Switch between login and register
                 switchScreenButton()
-                
-                VStack{
-                    NavigationLink(isActive: .constant(loginVM.state == .success)) {
-                        if loginVM.userData != nil {
-                            CategoryView(categoryVM: CategoryViewModel())
-                        } else {
-                            Text("Error")
-                        }
-                    } label: {
-                        EmptyView()
-                    }
-                }.hidden()
             }
         }
+        .navigationTitle(loginVM.state == .success ? "Sign Out" : "")
         .onAppear {
-            loginVM.reset()
+            loginVM.signOut()
         }
-        .transition(.slide)
     }
     
     @ViewBuilder
@@ -93,6 +84,6 @@ struct LoginView: View {
 
 struct Login_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        LoginView(loginVM: LoginViewModel())
     }
 }

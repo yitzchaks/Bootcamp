@@ -11,62 +11,34 @@ struct CategoryView: View {
     @ObservedObject var categoryVM: CategoryViewModel
     
     var body: some View {
-        NavigationView {
-            ScrollView{
-                statusView()
-                //2 columns in iphone and 4 columns in ipad
-                LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: UIDevice.current.userInterfaceIdiom == .pad ? 4 : 2), spacing: 10) {
-                    if let categories = categoryVM.categories {
-                        ForEach(categories, id: \.title) { category in
-                            NavigationLink {
-                                ProductsView(productsVM: ProductsViewModel(category.title))
-                            } label: {
-                                categoryItem(title: category.title, imege: category.image)
-                                    .shadow(color: .black.opacity(0.25), radius: 10, x: 0, y: 0)
-                                
-                            }
+        ScrollView{
+            StateView(state: Binding.constant(categoryVM.state))
+            //2 columns in iphone and 4 columns in ipad
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 10),
+                                     count: UIDevice.current.userInterfaceIdiom == .pad ? 4 : 2), spacing: 10) {
+                if let categories = categoryVM.categories {
+                    ForEach(categories, id: \.title) { category in
+                        NavigationLink {
+                            ProductsView(productsVM: ProductsViewModel(category: category.title))
+                        } label: {
+                            categoriesItem(title: category.title, imege: category.image)
+                                .shadow(color: .black.opacity(0.2), radius: 10)
+                            
                         }
                     }
                 }
             }
-            .navigationBarTitle("Categories", displayMode: .inline)
         }
-        .navigationBarBackButtonHidden(true)
-        .navigationViewStyle(.stack)
+        .navigationBarTitle("Categories", displayMode: .inline)
     }
     
     @ViewBuilder
-    private func statusView() -> some View{
-        VStack {
-            switch self.categoryVM.state {
-            case .load:
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle(tint: .blue))
-                    .scaleEffect(2)
-                    .padding()
-            case .success, .idle:
-                EmptyView()
-            case .error:
-                Text("Error!")
-                    .font(.largeTitle)
-                    .foregroundColor(.red)
-            }
-        }
-    }
-    
-    @ViewBuilder
-    private func categoryItem(title: String, imege: String) -> some View {
+    private func categoriesItem(title: String, imege: String) -> some View {
         ZStack{
-            AsyncImage(url: URL(string: imege)) { image in
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-            } placeholder: {
-                ImagePlaceholder()
-            }
-            .frame(width: 150, height: 150)
-            .cornerRadius(10)
-            .padding(.vertical)
+            AsyncImageView(url: imege)
+                .frame(width: 150, height: 150)
+                .cornerRadius(10)
+                .padding(.vertical)
             
             Text(title.capitalized)
                 .foregroundColor(.white)
