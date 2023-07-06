@@ -46,6 +46,7 @@ struct ProductsView: View {
             
             VStack(alignment: .leading, spacing: 10) {
                 Text(product.title)
+                    .foregroundColor(.black)
                     .font(.headline)
                     .lineLimit(1)
                 
@@ -98,7 +99,7 @@ struct ProductsView: View {
             Text("$\(price)")
                 .font(.title3)
                 .fontWeight(.bold)
-                .foregroundColor(.black)
+                .foregroundColor(.blue)
             
             Spacer()
             
