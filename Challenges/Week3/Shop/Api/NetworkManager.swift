@@ -45,7 +45,7 @@ class RequestManager {
         let (data, res) = try await URLSession.shared.data(for: urlRequest)
         if let res = res as? HTTPURLResponse, !(200...299).contains(res.statusCode) {
             print(res.statusCode)
-            let error = try JSONDecoder().decode(UserError.self, from: data)
+            let error = try JSONDecoder().decode(ErrorResponse.self, from: data)
             throw URLError(.badServerResponse, userInfo: [NSLocalizedDescriptionKey: error.message])
         }
         do {
@@ -56,4 +56,14 @@ class RequestManager {
             throw error
         }
     }
+}
+
+struct SuccessResponse: Decodable {
+    let message: String
+}
+
+struct ErrorResponse: Decodable {
+    let code: String
+    let message: String
+    let status: Int
 }

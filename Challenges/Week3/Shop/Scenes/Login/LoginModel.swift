@@ -17,12 +17,6 @@ struct UserResponse: Codable {
     var token: String
 }
 
-struct UserError: Codable {
-    let code: String
-    let message: String
-    let status: Int
-}
-
 //For View_Previews
 let user = UserResponse(
     firstname: "Avi",
