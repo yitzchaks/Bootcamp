@@ -86,17 +86,7 @@ struct ProductsView: View {
                     await productsVM.toggleFavorite(id: id)
                 }
             }, label: {
-                if productsVM.isFavoriteToggling == id {
-                    Image(systemName: isFavorite ? "heart.fill" : "heart")
-                        .foregroundColor(isFavorite ? .red : .gray)
-                        .animation(.easeIn(duration: 0.25))
-                        .modifier(HeartRipple(color: isFavorite ? .red : .gray))
-                } else {
-                    Image(systemName: isFavorite ? "heart.fill" : "heart")
-                        .foregroundColor(isFavorite ? .red : .gray)
-                        .animation(.easeIn(duration: 0.25))
-                    
-                }
+                HeartView(mode: isFavorite, ripple: productsVM.isFavoriteToggling == id)
             })
         }
     }
