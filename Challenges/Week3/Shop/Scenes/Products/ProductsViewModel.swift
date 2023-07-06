@@ -30,4 +30,30 @@ class ProductsViewModel: ObservableObject {
             self.state = .error
         }
     }
+    
+    @MainActor
+    func toggleFavorite(id: Int) async {
+        do {
+            var request: FavoritesRequest
+            var favoriteStatus: Bool
+            if let isFavorite = self.products?.first(where: { $0.id == id })?.isFavorite, isFavorite {
+                request = .remove(id)
+                favoriteStatus = false
+            } else {
+                request = .add(id)
+                favoriteStatus = true
+            }
+            
+            let _: SuccessResponse = try await RequestManager.fetch(request)
+            for i in 0..<(self.products?.count ?? 0) {
+                if self.products?[i].id == id {
+                    self.products?[i].isFavorite = favoriteStatus
+                    break
+                }
+            }
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
 }

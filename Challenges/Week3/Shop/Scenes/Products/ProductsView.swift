@@ -50,7 +50,7 @@ struct ProductsView: View {
                     .font(.headline)
                     .lineLimit(1)
                 
-                productFooter(price: product.price, isFavorite: product.isFavorite)
+                productFooter(product.id, price: product.price, isFavorite: product.isFavorite)
             }
             .padding(.horizontal)
         }
@@ -73,7 +73,7 @@ struct ProductsView: View {
                 Text(product.description)
                     .font(.headline)
                 
-                productFooter(price: product.price, isFavorite: product.isFavorite)
+                productFooter(product.id, price: product.price, isFavorite: product.isFavorite)
             }
             .padding()
             
@@ -94,7 +94,7 @@ struct ProductsView: View {
     }
     
     @ViewBuilder
-    private func productFooter(price: Int, isFavorite: Bool) -> some View {
+    private func productFooter(_ id: Int, price: Int, isFavorite: Bool) -> some View {
         HStack {
             Text("$\(price)")
                 .font(.title3)
@@ -104,7 +104,9 @@ struct ProductsView: View {
             Spacer()
             
             Button(action: {
-                //  product.isFavorite.toggle()
+                Task {
+                    await productsVM.toggleFavorite(id: id)
+                }
             }, label: {
                 Image(systemName: isFavorite ? "heart.fill" : "heart")
                     .foregroundColor(isFavorite ? .red : .gray)

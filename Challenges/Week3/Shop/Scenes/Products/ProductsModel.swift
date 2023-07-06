@@ -19,7 +19,7 @@ struct Product: Codable, Identifiable {
     let category: String
     let thumbnail: String
     let images: [String]
-    let isFavorite: Bool
+    var isFavorite: Bool
 }
 
 //For View_Previews
