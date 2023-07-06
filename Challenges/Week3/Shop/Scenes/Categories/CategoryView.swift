@@ -30,6 +30,12 @@ struct CategoryView: View {
             }
         }
         .navigationBarTitle("Categories", displayMode: .inline)
+        .onAppear() {
+            Task {
+                await categoryVM.fetchCategories()
+            }
+        }
+    
     }
     
     @ViewBuilder

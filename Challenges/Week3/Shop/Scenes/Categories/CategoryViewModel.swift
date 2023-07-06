@@ -11,14 +11,8 @@ class CategoryViewModel: ObservableObject {
     @Published var state: StateModel = .idle
     @Published var categories: [Category]?
     
-    init(){
-        Task{
-            await self.fetchProducts()
-        }
-    }
-    
     @MainActor
-    private func fetchProducts() async {
+    func fetchCategories() async {
         self.state = .load
         do {
             let request = CategoryRequest.categories
