@@ -18,6 +18,7 @@ struct AsyncImageView: View {
         } placeholder: {
             imagePlaceholder()
         }
+        .animation(.easeOut)
     }
     
     @ViewBuilder
