@@ -33,7 +33,7 @@ struct ProductsView: View {
                                 )
                         }
                     }
-                    .navigationTitle(productsVM.category)
+                    .navigationTitle(productsVM.category.capitalized)
                     .navigationViewStyle(.stack)
                 }
             }

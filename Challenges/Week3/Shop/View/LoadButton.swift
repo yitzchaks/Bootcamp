@@ -20,7 +20,7 @@ struct LoadButton: View {
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle(tint: .white))
             } else {
-                Text(text)
+                Text(text.capitalized)
             }
         }
         .buttonStyle(BlueButtonStyle())
