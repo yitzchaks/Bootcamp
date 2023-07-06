@@ -11,6 +11,7 @@ class ProductsViewModel: ObservableObject {
     @Published var category: String
     @Published var state: StateModel = .idle
     @Published var products: [Product]?
+    @Published var isFavoriteToggling = 0
     
     init(category: String){
         self.category = category
@@ -33,6 +34,7 @@ class ProductsViewModel: ObservableObject {
     
     @MainActor
     func toggleFavorite(id: Int) async {
+        self.isFavoriteToggling = id
         do {
             var request: FavoritesRequest
             var favoriteStatus: Bool
@@ -43,7 +45,7 @@ class ProductsViewModel: ObservableObject {
                 request = .add(id)
                 favoriteStatus = true
             }
-            
+
             let _: SuccessResponse = try await RequestManager.fetch(request)
             for i in 0..<(self.products?.count ?? 0) {
                 if self.products?[i].id == id {
@@ -54,6 +56,7 @@ class ProductsViewModel: ObservableObject {
         } catch {
             print(error.localizedDescription)
         }
+        self.isFavoriteToggling = 0
     }
     
 }

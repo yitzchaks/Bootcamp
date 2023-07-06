@@ -13,8 +13,11 @@ class CategoryViewModel: ObservableObject {
     
     @MainActor
     func fetchCategories() async {
-        self.state = .load
+        if self.categories != nil {
+            return
+        }
         do {
+            self.state = .load
             let request = CategoryRequest.categories
             self.categories = try await RequestManager.fetch(request)
             self.state = .success

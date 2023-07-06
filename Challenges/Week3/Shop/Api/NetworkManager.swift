@@ -33,6 +33,16 @@ enum RequestMethod: String {
     }
 }
 
+struct SuccessResponse: Decodable {
+    let message: String
+}
+
+struct ErrorResponse: Decodable {
+    let code: String
+    let message: String
+    let status: Int
+}
+
 class RequestManager {
     static func fetch<T: Decodable>(_ request: Requestable) async throws -> T {
         guard let url = URL(string: request.url) else { throw URLError(.badURL) }
@@ -56,14 +66,4 @@ class RequestManager {
             throw error
         }
     }
-}
-
-struct SuccessResponse: Decodable {
-    let message: String
-}
-
-struct ErrorResponse: Decodable {
-    let code: String
-    let message: String
-    let status: Int
 }

@@ -19,9 +19,18 @@ struct ProductsView: View {
                 if let products = productsVM.products {
                     ForEach(products) { product in
                         NavigationLink {
-                            productView(product)
+                            ScrollView{
+                                productView(product, mode: .single)
+                            }
+                            .navigationBarTitle(product.title.capitalized, displayMode: .inline)
                         } label: {
-                            productsItem(product)
+                            productView(product, mode: .list)
+                                .padding(.vertical, 10)
+                                .background(.blue.opacity(0.04))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(.gray.opacity(0.5))
+                                )
                         }
                     }
                     .navigationTitle(productsVM.category)
@@ -38,59 +47,28 @@ struct ProductsView: View {
     }
     
     @ViewBuilder
-    private func productsItem(_ product: Product) -> some View {
-        VStack{
-            AsyncImageView(url: product.thumbnail)
-                .cornerRadius(10)
-                .frame(width: 150, height: 130)
-            
+    private func productView(_ product: Product, mode: ProductViewMode) -> some View {
+        VStack {
+            //image
+            switch mode {
+            case .list:
+                AsyncImageView(url: product.thumbnail)
+                    .cornerRadius(10)
+                    .frame(width: 150, height: 130)
+            case .single:
+                sliderView(product.images)
+            }
+            //body
             VStack(alignment: .leading, spacing: 10) {
-                Text(product.title)
+                Text(mode == .list ? product.title : product.description)
                     .foregroundColor(.black)
                     .font(.headline)
-                    .lineLimit(1)
+                    .lineLimit(mode == .list ? 1 : nil)
                 
                 productFooter(product.id, price: product.price, isFavorite: product.isFavorite)
             }
             .padding(.horizontal)
         }
-        .padding(.vertical, 10)
-        .background(.blue.opacity(0.04))
-        .overlay(
-            RoundedRectangle(cornerRadius: 10)
-                .stroke(.gray.opacity(0.5))
-        )
-    }
-    
-    @ViewBuilder
-    private func productView(_ product: Product) -> some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 10) {
-                AsyncImageView(url: product.thumbnail)
-                    .frame(width: UIScreen.main.bounds.width - 30)
-                    .cornerRadius(10)
-                
-                Text(product.description)
-                    .font(.headline)
-                
-                productFooter(product.id, price: product.price, isFavorite: product.isFavorite)
-            }
-            .padding()
-            
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(product.images, id: \.self) { image in
-                        AsyncImageView(url: image)
-                            .frame(width: 80, height: 80)
-                            .cornerRadius(10)
-                            .padding(5)
-                    }
-                }
-                .padding(5)
-            }
-            .background(Color.gray.opacity(0.25))
-        }
-        .navigationBarTitle(product.title, displayMode: .inline)
     }
     
     @ViewBuilder
@@ -108,12 +86,34 @@ struct ProductsView: View {
                     await productsVM.toggleFavorite(id: id)
                 }
             }, label: {
-                Image(systemName: isFavorite ? "heart.fill" : "heart")
-                    .foregroundColor(isFavorite ? .red : .gray)
+                if productsVM.isFavoriteToggling == id {
+                    Image(systemName: isFavorite ? "heart.fill" : "heart")
+                        .foregroundColor(isFavorite ? .red : .gray)
+                        .animation(.easeIn(duration: 0.25))
+                        .modifier(HeartRipple(color: isFavorite ? .red : .gray))
+                } else {
+                    Image(systemName: isFavorite ? "heart.fill" : "heart")
+                        .foregroundColor(isFavorite ? .red : .gray)
+                        .animation(.easeIn(duration: 0.25))
+                    
+                }
             })
         }
     }
     
+    @ViewBuilder
+    private func sliderView(_ images: [String]) -> some View {
+        TabView {
+            ForEach(images.reversed(), id: \.self) { image in
+                AsyncImageView(url: image)
+                    .cornerRadius(10)
+                    .padding()
+            }
+        }
+        .tabViewStyle(.page)
+        .indexViewStyle(.page(backgroundDisplayMode: .always))
+        .frame(height: UIScreen.main.bounds.height / 2)
+    }
 }
 
 struct ProductsView_Previews: PreviewProvider {

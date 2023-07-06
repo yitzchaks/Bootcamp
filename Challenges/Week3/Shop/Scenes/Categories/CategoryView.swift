@@ -35,7 +35,6 @@ struct CategoryView: View {
                 await categoryVM.fetchCategories()
             }
         }
-    
     }
     
     @ViewBuilder

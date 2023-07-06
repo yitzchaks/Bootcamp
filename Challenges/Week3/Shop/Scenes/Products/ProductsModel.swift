@@ -7,6 +7,10 @@
 
 import Foundation
 
+enum ProductViewMode {
+    case list, single
+}
+
 struct Product: Codable, Identifiable {
     let id: Int
     let title: String
