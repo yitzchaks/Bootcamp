@@ -20,7 +20,6 @@
 		3091F5B02A531D0B003BE18A /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3091F5AF2A531D0B003BE18A /* NetworkManager.swift */; };
 		3091F5B42A534194003BE18A /* CategoryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3091F5B32A534194003BE18A /* CategoryRequest.swift */; };
 		3091F5B62A5341AB003BE18A /* ProductsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3091F5B52A5341AB003BE18A /* ProductsRequest.swift */; };
-		3091F5B82A5341CD003BE18A /* FavoritesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3091F5B72A5341CD003BE18A /* FavoritesRequest.swift */; };
 		3091F5BC2A5364B0003BE18A /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3091F5BB2A5364B0003BE18A /* CategoryViewModel.swift */; };
 		3091F5BE2A5364C3003BE18A /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3091F5BD2A5364C3003BE18A /* CategoryModel.swift */; };
 		3091F5C02A542957003BE18A /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3091F5BF2A542957003BE18A /* RoundedCorner.swift */; };
@@ -51,7 +50,6 @@
 		3091F5AF2A531D0B003BE18A /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		3091F5B32A534194003BE18A /* CategoryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRequest.swift; sourceTree = "<group>"; };
 		3091F5B52A5341AB003BE18A /* ProductsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsRequest.swift; sourceTree = "<group>"; };
-		3091F5B72A5341CD003BE18A /* FavoritesRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesRequest.swift; sourceTree = "<group>"; };
 		3091F5BB2A5364B0003BE18A /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
 		3091F5BD2A5364C3003BE18A /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
 		3091F5BF2A542957003BE18A /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
@@ -137,7 +135,6 @@
 				3091F5D22A575A8D003BE18A /* LoginRequest.swift */,
 				3091F5B32A534194003BE18A /* CategoryRequest.swift */,
 				3091F5B52A5341AB003BE18A /* ProductsRequest.swift */,
-				3091F5B72A5341CD003BE18A /* FavoritesRequest.swift */,
 			);
 			path = Api;
 			sourceTree = "<group>";
@@ -274,7 +271,6 @@
 				3091F5D32A575A8D003BE18A /* LoginRequest.swift in Sources */,
 				3091F5942A516028003BE18A /* CategoryView.swift in Sources */,
 				3091F5C32A543AFD003BE18A /* ProductsViewModel.swift in Sources */,
-				3091F5B82A5341CD003BE18A /* FavoritesRequest.swift in Sources */,
 				308BD50C2A4C06380038C21D /* Persistence.swift in Sources */,
 				308BD5052A4C06330038C21D /* ContentView.swift in Sources */,
 				30EAEAD02A4D7C950022B986 /* LoadButton.swift in Sources */,
