@@ -28,7 +28,6 @@ class ProductsViewModel: ObservableObject {
         if self.page != .defaultPage ||  self.products == nil {
             do {
                 self.state = .load
-                
                 var request: Requestable
                 switch self.page {
                 case .defaultPage:
@@ -38,9 +37,13 @@ class ProductsViewModel: ObservableObject {
                         self.state = .idle
                         return
                     }
+                    if favorites.count == 0 {
+                        self.state = .idle
+                        return
+                    }
                     request = ProductsRequest.productsByIds(ids: favorites)
                 case .search:
-                    if !(self.query.count > 0) {
+                    if self.query.count == 0 {
                         self.state = .idle
                         return
                     }
