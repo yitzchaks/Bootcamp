@@ -38,10 +38,27 @@ struct ProductsView: View {
             }
             StateView(state: Binding.constant(productsVM.state))
         }
+        //Add a search field below the toolbar
+        .toolbar {
+            if productsVM.page == .search {
+                ToolbarItem(placement: .principal) {
+                    TextField("Search", text: $productsVM.query)
+                        .textFieldStyle(.roundedBorder)
+                        .frame(width: 300)
+                        .onSubmit {
+                            Task {
+                                await productsVM.fetchProducts()
+                            }
+                        }
+                }
+            }
+        }
         .padding()
         .onAppear() {
             Task {
-                await productsVM.fetchProducts()
+                if productsVM.page != .search {
+                    await productsVM.fetchProducts()
+                }
             }
         }
     }

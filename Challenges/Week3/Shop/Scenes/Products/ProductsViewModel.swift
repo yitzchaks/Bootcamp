@@ -12,6 +12,7 @@ class ProductsViewModel: ObservableObject {
     @Published var category: String
     @Published var state: StateModel = .idle
     @Published var products: [Product]?
+    @Published var query: String = ""
     
     init(category: String) {
         self.category = category
@@ -24,19 +25,27 @@ class ProductsViewModel: ObservableObject {
     
     @MainActor
     func fetchProducts() async {
-        if self.products == nil || self.page == .favorites {
+        if self.page != .defaultPage ||  self.products == nil {
             do {
                 self.state = .load
-                var request: Requestable
                 
-                if self.page == .favorites {
+                var request: Requestable
+                switch self.page {
+                case .defaultPage:
+                    request = CategoryRequest.category(for: self.category)
+                case .favorites:
                     guard let favorites = UserDefaults.standard.array(forKey: "favorites") as? [Int] else {
                         self.state = .idle
                         return
                     }
                     request = ProductsRequest.productsByIds(ids: favorites)
-                } else {
-                    request = CategoryRequest.category(for: self.category)
+                case .search:
+                    if !(self.query.count > 0) {
+                        self.state = .idle
+                        return
+                    }
+                    self.products = nil
+                    request = ProductsRequest.search(query: self.query)
                 }
                 
                 self.products = try await RequestManager.fetch(request)
