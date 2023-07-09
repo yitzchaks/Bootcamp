@@ -31,19 +31,21 @@ struct CategoryView: View {
         }
         .navigationBarTitle("Categories", displayMode: .inline)
         .toolbar {
+            //favorites
             ToolbarItem(placement: .navigationBarTrailing) {
                 NavigationLink {
-                    ProductsView(productsVM: ProductsViewModel(category: "favorites"))
+                    ProductsView(productsVM: ProductsViewModel(page: .favorites))
                 } label: {
                     Image(systemName: "heart")
                     
                 }
             }
-            //search button
+            //search
             ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink(destination: Text("Search")) {
+                NavigationLink {
+                    ProductsView(productsVM: ProductsViewModel(page: .search))
+                } label: {
                     Image(systemName: "magnifyingglass")
-                    
                 }
             }
         }

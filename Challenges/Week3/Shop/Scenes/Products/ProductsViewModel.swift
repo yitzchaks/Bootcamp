@@ -8,22 +8,28 @@
 import Foundation
 
 class ProductsViewModel: ObservableObject {
+    var page: ProductsPage = .defaultPage
     @Published var category: String
     @Published var state: StateModel = .idle
     @Published var products: [Product]?
     
-    init(category: String){
+    init(category: String) {
         self.category = category
+    }
+    
+    init(page: ProductsPage) {
+        self.page = page
+        self.category = page.rawValue
     }
     
     @MainActor
     func fetchProducts() async {
-        if self.products == nil || self.category == "favorites" {
+        if self.products == nil || self.page == .favorites {
             do {
                 self.state = .load
                 var request: Requestable
                 
-                if category == "favorites" {
+                if self.page == .favorites {
                     guard let favorites = UserDefaults.standard.array(forKey: "favorites") as? [Int] else {
                         self.state = .idle
                         return
@@ -54,7 +60,7 @@ class ProductsViewModel: ObservableObject {
                         newFavorites.append(id)
                     } else {
                         newFavorites.removeAll(where: { $0 == id })
-                        if self.category == "favorites" {
+                        if self.page == .favorites {
                             self.products?.remove(at: i)
                         }
                     }
@@ -68,7 +74,7 @@ class ProductsViewModel: ObservableObject {
     }
     
     private func updateFavorites() {
-        if self.category == "favorites" {
+        if self.page == .favorites {
             for i in 0..<(self.products?.count ?? 0) {
                 self.products?[i].isFavorite = true
             }

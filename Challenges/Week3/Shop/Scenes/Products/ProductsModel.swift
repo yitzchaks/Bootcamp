@@ -11,6 +11,10 @@ enum ProductViewMode {
     case list, single
 }
 
+enum ProductsPage: String {
+    case defaultPage, favorites, search
+}
+
 struct Product: Codable, Identifiable {
     let id: Int
     let title: String

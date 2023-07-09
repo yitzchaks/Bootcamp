@@ -133,8 +133,8 @@
 		308BD5182A4C3B8D0038C21D /* Api */ = {
 			isa = PBXGroup;
 			children = (
-				3091F5D22A575A8D003BE18A /* LoginRequest.swift */,
 				3091F5AF2A531D0B003BE18A /* NetworkManager.swift */,
+				3091F5D22A575A8D003BE18A /* LoginRequest.swift */,
 				3091F5B32A534194003BE18A /* CategoryRequest.swift */,
 				3091F5B52A5341AB003BE18A /* ProductsRequest.swift */,
 				3091F5B72A5341CD003BE18A /* FavoritesRequest.swift */,
