@@ -30,6 +30,23 @@ struct CategoryView: View {
             }
         }
         .navigationBarTitle("Categories", displayMode: .inline)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink {
+                    ProductsView(productsVM: ProductsViewModel(category: "favorites"))
+                } label: {
+                    Image(systemName: "heart")
+                    
+                }
+            }
+            //search button
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink(destination: Text("Search")) {
+                    Image(systemName: "magnifyingglass")
+                    
+                }
+            }
+        }
         .onAppear() {
             Task {
                 await categoryVM.fetchCategories()

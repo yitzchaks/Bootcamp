@@ -11,7 +11,6 @@ class ProductsViewModel: ObservableObject {
     @Published var category: String
     @Published var state: StateModel = .idle
     @Published var products: [Product]?
-    @Published var isFavoriteToggling = 0
     
     init(category: String){
         self.category = category
@@ -19,44 +18,66 @@ class ProductsViewModel: ObservableObject {
     
     @MainActor
     func fetchProducts() async {
-        if self.products != nil {
-            return
+        if self.products == nil || self.category == "favorites" {
+            do {
+                self.state = .load
+                var request: Requestable
+                
+                if category == "favorites" {
+                    guard let favorites = UserDefaults.standard.array(forKey: "favorites") as? [Int] else {
+                        self.state = .idle
+                        return
+                    }
+                    request = ProductsRequest.productsByIds(ids: favorites)
+                } else {
+                    request = CategoryRequest.category(for: self.category)
+                }
+                
+                self.products = try await RequestManager.fetch(request)
+                self.state = .success
+            } catch {
+                self.state = .error
+            }
         }
-        do {
-            self.state = .load
-            let request = CategoryRequest.category(for: self.category)
-            self.products = try await RequestManager.fetch(request)
-            self.state = .success
-        } catch {
-            self.state = .error
-        }
+        updateFavorites()
     }
     
     @MainActor
-    func toggleFavorite(id: Int) async {
-        self.isFavoriteToggling = id
-        do {
-            var request: FavoritesRequest
-            var favoriteStatus: Bool
-            if let isFavorite = self.products?.first(where: { $0.id == id })?.isFavorite, isFavorite {
-                request = .remove(id)
-                favoriteStatus = false
-            } else {
-                request = .add(id)
-                favoriteStatus = true
-            }
-
-            let _: SuccessResponse = try await RequestManager.fetch(request)
-            for i in 0..<(self.products?.count ?? 0) {
-                if self.products?[i].id == id {
-                    self.products?[i].isFavorite = favoriteStatus
-                    break
+    func toggleFavorite(_ id: Int, isFavorite: Bool) async {
+        for i in 0..<(self.products?.count ?? 0) {
+            if self.products?[i].id == id {
+                self.products?[i].isFavorite = !isFavorite
+                
+                if let favorites = UserDefaults.standard.array(forKey: "favorites") as? [Int] {
+                    var newFavorites = favorites
+                    if !isFavorite {
+                        newFavorites.append(id)
+                    } else {
+                        newFavorites.removeAll(where: { $0 == id })
+                        if self.category == "favorites" {
+                            self.products?.remove(at: i)
+                        }
+                    }
+                    UserDefaults.standard.set(newFavorites, forKey: "favorites")
+                } else {
+                    UserDefaults.standard.set([id], forKey: "favorites")
                 }
+                break
             }
-        } catch {
-            print(error.localizedDescription)
         }
-        self.isFavoriteToggling = 0
     }
     
+    private func updateFavorites() {
+        if self.category == "favorites" {
+            for i in 0..<(self.products?.count ?? 0) {
+                self.products?[i].isFavorite = true
+            }
+            return
+        }
+        if let favorites = UserDefaults.standard.array(forKey: "favorites") as? [Int] {
+            for i in 0..<(self.products?.count ?? 0) {
+                self.products?[i].isFavorite = favorites.contains(self.products?[i].id ?? 0)
+            }
+        }
+    }
 }

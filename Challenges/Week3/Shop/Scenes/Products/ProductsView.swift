@@ -12,7 +12,6 @@ struct ProductsView: View {
     
     var body: some View {
         ScrollView {
-            StateView(state: Binding.constant(productsVM.state))
             //2 columns in iphone and 4 columns in ipad
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 10),
                                      count: UIDevice.current.userInterfaceIdiom == .pad ? 4 : 2), spacing: 10) {
@@ -37,6 +36,7 @@ struct ProductsView: View {
                     .navigationViewStyle(.stack)
                 }
             }
+            StateView(state: Binding.constant(productsVM.state))
         }
         .padding()
         .onAppear() {
@@ -54,7 +54,7 @@ struct ProductsView: View {
             case .list:
                 AsyncImageView(url: product.thumbnail)
                     .cornerRadius(10)
-                    .frame(width: 150, height: 130)
+                    .frame(height: 130)
             case .single:
                 sliderView(product.images)
             }
@@ -65,10 +65,10 @@ struct ProductsView: View {
                     .font(.headline)
                     .lineLimit(mode == .list ? 1 : nil)
                 
-                productFooter(product.id, price: product.price, isFavorite: product.isFavorite)
+                productFooter(product.id, price: product.price, isFavorite: product.isFavorite ?? false)
             }
-            .padding(.horizontal)
         }
+        .padding(.horizontal)
     }
     
     @ViewBuilder
@@ -83,10 +83,11 @@ struct ProductsView: View {
             
             Button(action: {
                 Task {
-                    await productsVM.toggleFavorite(id: id)
+                    await productsVM.toggleFavorite(id, isFavorite: isFavorite)
                 }
             }, label: {
-                HeartView(mode: isFavorite, ripple: productsVM.isFavoriteToggling == id)
+                Image(systemName: isFavorite ? "heart.fill" : "heart")
+                    .foregroundColor(isFavorite ? .red : .gray)
             })
         }
     }

@@ -10,6 +10,7 @@ import Foundation
 class CategoryViewModel: ObservableObject {
     @Published var state: StateModel = .idle
     @Published var categories: [Category]?
+    @Published var searchText: String = "!!!"
     
     @MainActor
     func fetchCategories() async {
