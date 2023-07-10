@@ -42,14 +42,20 @@ struct ProductsView: View {
         .toolbar {
             if productsVM.page == .search {
                 ToolbarItem(placement: .principal) {
-                    TextField("Search", text: $productsVM.query)
-                        .textFieldStyle(.roundedBorder)
-                        .frame(width: 300)
-                        .onSubmit {
-                            Task {
-                                await productsVM.fetchProducts()
+                    ZStack{
+                        TextField("Search", text: $productsVM.query)
+                            .textFieldStyle(.roundedBorder)
+                            .frame(width: 300)
+                            .onSubmit {
+                                Task {
+                                    await productsVM.fetchProducts()
+                                }
                             }
-                        }
+                        
+                        Image(systemName: "magnifyingglass")
+                            .foregroundColor(.gray)
+                            .offset(x: 130)
+                    }
                 }
             }
         }
