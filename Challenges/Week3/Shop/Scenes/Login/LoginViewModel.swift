@@ -42,13 +42,11 @@ class LoginViewModel: ObservableObject {
     
     func signOut() -> Void {
         self.reqType = .login
-        self.username = "y@gmail.com"
-        self.password = "1234"
+        self.username = ""
+        self.password = ""
         self.firstname = ""
         self.lastname = ""
         self.state = .idle
         self.userData = nil
-        //remove token from UserDefaults
-//        UserDefaults.standard.removeObject(forKey: "token")
     }
 }
